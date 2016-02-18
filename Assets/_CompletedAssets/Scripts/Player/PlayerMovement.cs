@@ -5,6 +5,7 @@ namespace CompleteProject
 {
     public class PlayerMovement : MonoBehaviour
     {
+		const float ROTATE_MUTLIPLIER = 15f;
         public float speed = 6f;            // The speed that the player will move at.
 
         Vector3 movement;                   // The vector to store the direction of the player's movement.
@@ -35,10 +36,16 @@ namespace CompleteProject
             float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
             // Move the player around the scene.
-            Move (h, v);
+            
 
             // Turn the player to face the mouse cursor.
-            Turning ();
+			if (PlayerCamera.cameraLabel == PlayerCamera.CEILING_CAMERA) {
+				Move (h, v);
+				Turning ();
+			} else {
+				FPMove ();
+				FPTurning ();
+			}
 
             // Animate the player.
             Animating (h, v);
@@ -102,6 +109,26 @@ namespace CompleteProject
             }
 #endif
         }
+
+		void FPTurning(){
+			if (Input.GetButton ("Fire2")) {
+				transform.Rotate (0, Input.GetAxis ("Mouse X"), 0);
+			} else {
+				transform.Rotate (0, Input.GetAxis ("Mouse X") * ROTATE_MUTLIPLIER, 0);
+			}
+
+		}
+
+		void FPMove(){
+
+			movement.Set (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+			movement = transform.TransformDirection (movement);
+
+			movement = movement.normalized * speed * Time.deltaTime;
+
+			playerRigidbody.MovePosition (transform.position + movement);
+
+		}
 
 
         void Animating (float h, float v)
