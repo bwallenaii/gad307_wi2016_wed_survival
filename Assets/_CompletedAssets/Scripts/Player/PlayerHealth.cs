@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace CompleteProject
 {
@@ -103,7 +104,7 @@ namespace CompleteProject
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.
-            Application.LoadLevel (Application.loadedLevel);
+			SceneManager.LoadScene (0);
         }
     }
 }
