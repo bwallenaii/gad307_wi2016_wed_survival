@@ -15,6 +15,7 @@ namespace CompleteProject
 		public GameObject leftBarrel;
 		public GameObject rightBarrel;
 		public GameObject centerBarrel;
+		public GameObject decoy;
 
 		private PlayerShooting leftShot;
 		private PlayerShooting centerShot;
@@ -39,6 +40,12 @@ namespace CompleteProject
 				weaponTimer -= Time.deltaTime;
 			} else {
 				resetWeapon ();
+			}
+
+			if (Input.GetButtonDown ("Fire2")) {
+				Instantiate (decoy, 
+					new Vector3(transform.position.x, 1, transform.position.z), 
+					transform.rotation);
 			}
 		}
 
