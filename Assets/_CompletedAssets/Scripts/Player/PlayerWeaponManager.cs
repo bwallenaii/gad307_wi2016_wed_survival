@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 namespace CompleteProject
 {
@@ -16,6 +17,9 @@ namespace CompleteProject
 		public GameObject rightBarrel;
 		public GameObject centerBarrel;
 		public GameObject decoy;
+		public Text numDecoysOut;
+
+		public static int numDecoys = 0;
 
 		private PlayerShooting leftShot;
 		private PlayerShooting centerShot;
@@ -42,16 +46,20 @@ namespace CompleteProject
 				resetWeapon ();
 			}
 
-			if (Input.GetButtonDown ("Fire2")) {
+			if (Input.GetButtonDown ("Fire2") && numDecoys > 0) {
+				numDecoys--;
 				Instantiate (decoy, 
 					new Vector3(transform.position.x, 1, transform.position.z), 
 					transform.rotation);
 			}
+			numDecoysOut.text = numDecoys.ToString ();
 		}
 
 		private void resetWeapon(){
 			leftShot.enabled = false;
 			rightShot.enabled = false;
+			leftShot.DisableEffects ();
+			rightShot.DisableEffects ();
 
 			centerShot.damagePerShot = NORMAL_DAMAGE;
 			centerShot.timeBetweenBullets = NORMAL_SPEED;

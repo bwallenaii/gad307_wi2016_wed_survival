@@ -73,6 +73,9 @@ namespace CompleteProject
 
         void Death ()
         {
+			if (name.Contains("Hellephant")) {
+				PlayerWeaponManager.numDecoys++;
+			}
             // The enemy is dead.
             isDead = true;
 
